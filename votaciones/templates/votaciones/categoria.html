@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+  <a href="{% url 'detalle_edicion' categoria.edicion.anio %}">&lt; Volver a categorías</a>
+  <h2>{{ categoria.nombre }}</h2>
+
+  <h4>Votaciones</h4>
+  {% for votacion in votaciones %}
+    <div class="tarjeta">
+      <h5>{{ votacion.titulo }}
+        {% if votacion.estado == 'abierta' %}
+          <span class="badge bg-success">Abierta</span>
+        {% else %}
+          <span class="badge bg-secondary">Cerrada</span>
+        {% endif %}
+      </h5>
+      <p>Cierra: {{ votacion.fecha_cierre }}</p>
+      <a class="btn btn-verde" href="{% url 'detalle_votacion' votacion.id %}">Ver opciones</a>
+    </div>
+  {% empty %}
+    <p>Esta categoría no tiene votaciones.</p>
+  {% endfor %}
+{% endblock %}

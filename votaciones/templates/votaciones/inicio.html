@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+  <h1>Sistema Web de Votaciones</h1>
+  <p>Festival de la Leyenda Vallenata - Valledupar, Colombia</p>
+
+  <h3>Ediciones del Festival</h3>
+  {% for edicion in ediciones %}
+    <div class="tarjeta">
+      <h5>{{ edicion.nombre }}</h5>
+      <p>Del {{ edicion.fecha_inicio }} al {{ edicion.fecha_fin }}</p>
+      <a class="btn btn-verde" href="{% url 'detalle_edicion' edicion.anio %}">Ver categorías</a>
+    </div>
+  {% empty %}
+    <p>Todavía no hay ediciones registradas.</p>
+  {% endfor %}
+{% endblock %}

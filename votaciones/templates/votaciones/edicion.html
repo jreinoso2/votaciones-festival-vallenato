@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+  <a href="{% url 'inicio' %}">&lt; Volver a ediciones</a>
+  <h2>{{ edicion.nombre }}</h2>
+
+  <h4>Categorías</h4>
+  {% for categoria in categorias %}
+    <div class="tarjeta">
+      <h5>{{ categoria.nombre }}</h5>
+      <p>{{ categoria.descripcion }}</p>
+      <a class="btn btn-verde" href="{% url 'detalle_categoria' categoria.id %}">Ver votaciones</a>
+    </div>
+  {% empty %}
+    <p>Esta edición no tiene categorías.</p>
+  {% endfor %}
+{% endblock %}
