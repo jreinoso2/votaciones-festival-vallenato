@@ -55,9 +55,13 @@ def detalle_votacion(request, id):
 
 # Paso 1: el usuario eligió una opción. Se valida y se pide confirmación.
 @login_required
-@require_POST
 def confirmar_voto(request, id):
     votacion = get_object_or_404(Votacion.objects.select_related('categoria__edicion'), id=id)
+    # Si llega por GET (por ejemplo, cuando vuelve del login) no se hace nada:
+    # se devuelve a la votación para que elija su opción otra vez.
+    if request.method != 'POST':
+        messages.info(request, 'Ya inició sesión. Ahora elija su opción y continúe con el voto.')
+        return redirect('detalle_votacion', id=votacion.id)
     try:
         opcion = validar_voto(request.user, votacion, request.POST.get('opcion'))
     except VotoRechazado as error:

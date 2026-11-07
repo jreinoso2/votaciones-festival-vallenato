@@ -190,6 +190,10 @@ class PruebasVotaciones(TestCase):
         """Seguridad: el voto solo se acepta por POST."""
         r = self.client.get(reverse('registrar_voto', args=[self.d['vot_eliminatoria'].id]))
         self.assertEqual(r.status_code, 405)
+        # confirmar por GET (cuando vuelve del login) devuelve a la votación sin guardar nada
+        r = self.client.get(reverse('confirmar_voto', args=[self.d['vot_eliminatoria'].id]))
+        self.assertRedirects(r, reverse('detalle_votacion', args=[self.d['vot_eliminatoria'].id]))
+        self.assertEqual(Voto.objects.count(), 0)
 
 
 class PruebasConcurrencia(TransactionTestCase):
