@@ -21,6 +21,7 @@
       <a class="navbar-brand" href="{% url 'inicio' %}">Votaciones Vallenato</a>
       <div class="d-flex align-items-center">
         {% if user.is_authenticated %}
+          <a class="btn btn-light btn-sm me-2" href="{% url 'mis_votos' %}">Mis votos</a>
           <span class="text-white me-3">Hola, {{ user.username }}</span>
           <!-- en Django 5 el logout se hace con POST -->
           <form method="post" action="{% url 'logout' %}">
@@ -37,7 +38,7 @@
 
   <div class="container mt-4">
     {% for mensaje in messages %}
-      <div class="alert alert-success">{{ mensaje }}</div>
+      <div class="alert {% if mensaje.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">{{ mensaje }}</div>
     {% endfor %}
 
     {% block contenido %}{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+  <h2>Mis votos</h2>
+  <p>Categorías en las que ya participó, {{ user.username }}.</p>
+
+  <div class="table-responsive">
+    <table class="table table-striped bg-white">
+      <thead>
+        <tr>
+          <th>Edición</th>
+          <th>Categoría</th>
+          <th>Votación</th>
+          <th>Opción elegida</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for voto in votos %}
+          <tr>
+            <td>{{ voto.edicion.anio }}</td>
+            <td>{{ voto.categoria.nombre }}</td>
+            <td>{{ voto.votacion.titulo }}</td>
+            <td>{{ voto.opcion.nombre }}</td>
+            <td>{{ voto.fecha|date:"d/m/Y H:i" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">Todavía no ha votado en ninguna categoría.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

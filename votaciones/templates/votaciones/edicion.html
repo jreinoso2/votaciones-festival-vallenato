@@ -7,7 +7,9 @@
   <h4>Categorías</h4>
   {% for categoria in categorias %}
     <div class="tarjeta">
-      <h5>{{ categoria.nombre }}</h5>
+      <h5>{{ categoria.nombre }}
+        {% if categoria.id in votadas %}<span class="badge bg-primary">Ya votó</span>{% endif %}
+      </h5>
       <p>{{ categoria.descripcion }}</p>
       <a class="btn btn-verde" href="{% url 'detalle_categoria' categoria.id %}">Ver votaciones</a>
     </div>

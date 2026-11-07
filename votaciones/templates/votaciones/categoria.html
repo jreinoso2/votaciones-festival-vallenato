@@ -4,6 +4,13 @@
   <a href="{% url 'detalle_edicion' categoria.edicion.anio %}">&lt; Volver a categorías</a>
   <h2>{{ categoria.nombre }}</h2>
 
+  {% if voto %}
+    <div class="alert alert-info">
+      Ya votó en esta categoría por <b>{{ voto.opcion.nombre }}</b> ({{ voto.votacion.titulo }}).
+      Solo se permite un voto por categoría, aunque tenga varias votaciones.
+    </div>
+  {% endif %}
+
   <h4>Votaciones</h4>
   {% for votacion in votaciones %}
     <div class="tarjeta">

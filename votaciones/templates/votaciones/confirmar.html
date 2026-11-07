@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+  <h2>Confirmar voto</h2>
+
+  <div class="tarjeta">
+    <p><b>Edición:</b> {{ votacion.categoria.edicion.nombre }}</p>
+    <p><b>Categoría:</b> {{ votacion.categoria.nombre }}</p>
+    <p><b>Votación:</b> {{ votacion.titulo }}</p>
+    <p class="fs-5"><b>Opción elegida:</b> {{ opcion.nombre }}</p>
+  </div>
+
+  <div class="alert alert-warning">
+    Solo puede votar una vez en la categoría "{{ votacion.categoria.nombre }}".
+    Después de confirmar no podrá cambiar su voto.
+  </div>
+
+  <form method="post" action="{% url 'registrar_voto' votacion.id %}" class="d-flex gap-2">
+    {% csrf_token %}
+    <input type="hidden" name="opcion" value="{{ opcion.id }}">
+    <button type="submit" class="btn btn-verde">Confirmar voto</button>
+    <a class="btn btn-outline-secondary" href="{% url 'detalle_votacion' votacion.id %}">Cancelar</a>
+  </form>
+{% endblock %}
