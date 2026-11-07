@@ -1,0 +1,14 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Eliminar</h2>
+  <div class="tarjeta">
+    <p>¿Seguro que quiere eliminar <b>{{ objeto }}</b>?</p>
+    {% if aviso %}<p class="text-danger">{{ aviso }}</p>{% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+      <a class="btn btn-secondary" href="{% url volver %}">Cancelar</a>
+    </form>
+  </div>
+{% endblock %}

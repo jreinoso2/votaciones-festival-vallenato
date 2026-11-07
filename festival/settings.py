@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # aplicaciones nuestras
     'votaciones',
     'usuarios',
+    'gestion',
 ]
 
 MIDDLEWARE = [

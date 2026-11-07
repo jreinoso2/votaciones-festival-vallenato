@@ -11,6 +11,9 @@
     .menu { background-color: #1e7b45; }
     .btn-verde { background-color: #1e7b45; color: white; }
     .tarjeta { background-color: white; border-left: 5px solid #f2b705; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+    /* campos de los formularios del panel */
+    .formulario input, .formulario select, .formulario textarea { display: block; width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; }
+    .formulario .errorlist { color: red; list-style: none; padding: 0; }
     footer { background-color: #7a4e2d; color: white; text-align: center; padding: 15px; margin-top: 40px; }
   </style>
 </head>
@@ -21,6 +24,9 @@
       <a class="navbar-brand" href="{% url 'inicio' %}">Votaciones Vallenato</a>
       <div class="d-flex align-items-center">
         {% if user.is_authenticated %}
+          {% if user.is_staff %}
+            <a class="btn btn-warning btn-sm me-2" href="{% url 'gestion_panel' %}">Panel de gestión</a>
+          {% endif %}
           <a class="btn btn-light btn-sm me-2" href="{% url 'mis_votos' %}">Mis votos</a>
           <span class="text-white me-3">Hola, {{ user.username }}</span>
           <!-- en Django 5 el logout se hace con POST -->

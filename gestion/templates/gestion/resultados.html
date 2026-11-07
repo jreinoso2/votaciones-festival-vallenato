@@ -1,0 +1,29 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Resultados</h2>
+
+  <form method="get" class="mb-3">
+    Edición:
+    <select name="edicion">
+      {% for e in ediciones %}
+        <option value="{{ e.anio }}" {% if e == edicion %}selected{% endif %}>{{ e.anio }}</option>
+      {% endfor %}
+    </select>
+    <button class="btn btn-sm btn-verde">Ver</button>
+  </form>
+
+  <table class="table table-striped bg-white">
+    <tr><th>Categoría</th><th>Votación</th><th>Opción</th><th>Votos</th></tr>
+    {% for opcion in filas %}
+      <tr>
+        <td>{{ opcion.votacion.categoria.nombre }}</td>
+        <td>{{ opcion.votacion.titulo }}</td>
+        <td>{{ opcion.nombre }}</td>
+        <td><b>{{ opcion.total }}</b></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">No hay datos para esta edición.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Opciones</h2>
+  <a class="btn btn-verde mb-2" href="{% url 'gestion_opcion_crear' %}">Agregar opción</a>
+
+  <table class="table table-striped bg-white">
+    <tr><th>Edición</th><th>Categoría</th><th>Votación</th><th>Opción</th><th>Votos</th><th></th></tr>
+    {% for opcion in opciones %}
+      <tr>
+        <td>{{ opcion.votacion.categoria.edicion.anio }}</td>
+        <td>{{ opcion.votacion.categoria.nombre }}</td>
+        <td>{{ opcion.votacion.titulo }}</td>
+        <td>{{ opcion.nombre }}</td>
+        <td>{{ opcion.num_votos }}</td>
+        <td>
+          <a href="{% url 'gestion_opcion_editar' opcion.id %}">Modificar</a> |
+          <a href="{% url 'gestion_opcion_eliminar' opcion.id %}" class="text-danger">Eliminar</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">No hay opciones.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

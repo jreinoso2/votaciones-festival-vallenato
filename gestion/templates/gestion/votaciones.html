@@ -1,0 +1,39 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Votaciones</h2>
+  <a class="btn btn-verde mb-2" href="{% url 'gestion_votacion_crear' %}">Agregar votación</a>
+
+  <div class="table-responsive">
+  <table class="table table-striped bg-white">
+    <tr><th>Edición</th><th>Categoría</th><th>Título</th><th>Cierre</th><th>Estado</th><th>Opciones</th><th>Votos</th><th></th></tr>
+    {% for votacion in votaciones %}
+      <tr>
+        <td>{{ votacion.categoria.edicion.anio }}</td>
+        <td>{{ votacion.categoria.nombre }}</td>
+        <td>{{ votacion.titulo }}</td>
+        <td>{{ votacion.fecha_cierre|date:"d/m/Y H:i" }}</td>
+        <td>
+          {{ votacion.get_estado_display }}
+          {% if votacion.estado == 'abierta' and not votacion.esta_habilitada %}(fuera de fechas){% endif %}
+        </td>
+        <td>{{ votacion.num_opciones }}</td>
+        <td>{{ votacion.num_votos }}</td>
+        <td>
+          <!-- abrir o cerrar la votacion -->
+          <form method="post" action="{% url 'gestion_votacion_estado' votacion.id %}">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-outline-success">
+              {% if votacion.estado == 'abierta' %}Cerrar{% else %}Abrir{% endif %}
+            </button>
+          </form>
+          <a href="{% url 'gestion_votacion_editar' votacion.id %}">Modificar</a> |
+          <a href="{% url 'gestion_votacion_eliminar' votacion.id %}" class="text-danger">Eliminar</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="8">No hay votaciones.</td></tr>
+    {% endfor %}
+  </table>
+  </div>
+{% endblock %}

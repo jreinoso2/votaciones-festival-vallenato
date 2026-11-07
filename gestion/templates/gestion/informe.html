@@ -1,0 +1,13 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Descargar informe</h2>
+  <div class="tarjeta formulario">
+    <p>Se descarga un archivo CSV que se puede abrir con Excel.</p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-verde">Descargar</button>
+    </form>
+  </div>
+{% endblock %}

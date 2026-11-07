@@ -1,0 +1,24 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Categorías</h2>
+  <a class="btn btn-verde mb-2" href="{% url 'gestion_categoria_crear' %}">Agregar categoría</a>
+
+  <table class="table table-striped bg-white">
+    <tr><th>Edición</th><th>Nombre</th><th>Votaciones</th><th>Votos</th><th></th></tr>
+    {% for categoria in categorias %}
+      <tr>
+        <td>{{ categoria.edicion.anio }}</td>
+        <td>{{ categoria.nombre }}</td>
+        <td>{{ categoria.num_votaciones }}</td>
+        <td>{{ categoria.num_votos }}</td>
+        <td>
+          <a href="{% url 'gestion_categoria_editar' categoria.id %}">Modificar</a> |
+          <a href="{% url 'gestion_categoria_eliminar' categoria.id %}" class="text-danger">Eliminar</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">No hay categorías.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

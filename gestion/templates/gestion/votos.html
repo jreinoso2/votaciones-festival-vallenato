@@ -1,0 +1,31 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Votos registrados</h2>
+  <p>Los votos solo se pueden consultar, no se pueden cambiar ni borrar.</p>
+
+  <form method="get" class="tarjeta formulario">
+    {{ form.as_p }}
+    <button class="btn btn-verde">Buscar</button>
+  </form>
+
+  <p>Total: <b>{{ votos|length }}</b></p>
+  <div class="table-responsive">
+  <table class="table table-striped bg-white">
+    <tr><th>ID</th><th>Fecha</th><th>Usuario</th><th>Edición</th><th>Categoría</th><th>Votación</th><th>Opción</th></tr>
+    {% for voto in votos %}
+      <tr>
+        <td>{{ voto.id }}</td>
+        <td>{{ voto.fecha|date:"d/m/Y H:i" }}</td>
+        <td>{{ voto.usuario.username }}</td>
+        <td>{{ voto.edicion.anio }}</td>
+        <td>{{ voto.categoria.nombre }}</td>
+        <td>{{ voto.votacion.titulo }}</td>
+        <td>{{ voto.opcion.nombre }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="7">No se encontraron votos.</td></tr>
+    {% endfor %}
+  </table>
+  </div>
+{% endblock %}

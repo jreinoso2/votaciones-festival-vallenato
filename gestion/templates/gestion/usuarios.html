@@ -1,0 +1,32 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Usuarios</h2>
+  <p>Los usuarios marcados como personal del festival pueden entrar a este panel. Los demás solo votan.</p>
+
+  <table class="table table-striped bg-white">
+    <tr><th>Usuario</th><th>Fecha de registro</th><th>Votos</th><th>Tipo</th><th></th></tr>
+    {% for u in usuarios %}
+      <tr>
+        <td>{{ u.username }}</td>
+        <td>{{ u.date_joined|date:"d/m/Y" }}</td>
+        <td>{{ u.num_votos }}</td>
+        <td>
+          {% if u.is_superuser %}Administrador
+          {% elif u.is_staff %}Personal del festival
+          {% else %}Votante{% endif %}
+        </td>
+        <td>
+          {% if not u.is_superuser and u != user %}
+            <form method="post" action="{% url 'gestion_usuario_personal' u.id %}">
+              {% csrf_token %}
+              <button class="btn btn-sm btn-outline-primary">
+                {% if u.is_staff %}Quitar permiso{% else %}Dar permiso de personal{% endif %}
+              </button>
+            </form>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

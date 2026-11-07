@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+  <div class="row">
+    <!-- menu del panel -->
+    <div class="col-md-3 mb-3">
+      <div class="list-group">
+        <a class="list-group-item" href="{% url 'gestion_panel' %}"><b>Panel de gestión</b></a>
+        <a class="list-group-item" href="{% url 'gestion_ediciones' %}">Ediciones</a>
+        <a class="list-group-item" href="{% url 'gestion_categorias' %}">Categorías</a>
+        <a class="list-group-item" href="{% url 'gestion_votaciones' %}">Votaciones</a>
+        <a class="list-group-item" href="{% url 'gestion_opciones' %}">Opciones</a>
+        <a class="list-group-item" href="{% url 'gestion_votos' %}">Votos</a>
+        <a class="list-group-item" href="{% url 'gestion_resultados' %}">Resultados</a>
+        <a class="list-group-item" href="{% url 'gestion_informe' %}">Descargar informe</a>
+        <a class="list-group-item" href="{% url 'gestion_usuarios' %}">Usuarios</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      {% block panel %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}

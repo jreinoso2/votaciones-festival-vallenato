@@ -20,6 +20,7 @@ Aplicación web hecha con **Python 3.12, Django 5.2 (patrón MVT) y MySQL 8.4**.
 - Página **Mis votos** con las categorías en que participó el usuario.
 - Consulta administrativa de votos (solo lectura) y total de votos por opción en Django Admin.
 - API **GET `/api/categorias/`** con las categorías, sus votaciones y opciones en JSON.
+- **Panel de gestión** (`/gestion/`) para el personal del festival, con formularios propios para agregar, modificar y eliminar ediciones, categorías, votaciones y opciones; abrir o cerrar votaciones; consultar votos; ver resultados; descargar el informe en CSV y dar permiso de personal a otros usuarios. Así el personal no tiene que entrar al admin de Django, que queda solo para el desarrollador.
 
 ## Dónde está cada cosa
 
@@ -31,7 +32,9 @@ Aplicación web hecha con **Python 3.12, Django 5.2 (patrón MVT) y MySQL 8.4**.
 | Vistas de voto, historial y API | `votaciones/views.py` (`confirmar_voto`, `registrar`, `mis_votos`, `api_categorias`) |
 | Rutas | `votaciones/urls.py` |
 | Administración de votos | `votaciones/admin.py` (`VotoAdmin`) |
+| Panel de gestión (formularios, vistas, rutas) | `gestion/forms.py`, `gestion/views.py`, `gestion/urls.py` |
 | Pruebas CP-01 a CP-10 | `votaciones/tests.py` |
+| Pruebas del panel | `gestion/tests.py` |
 | Datos de prueba | `votaciones/management/commands/cargar_datos_demo.py` |
 
 ## Estructura
@@ -40,6 +43,7 @@ Aplicación web hecha con **Python 3.12, Django 5.2 (patrón MVT) y MySQL 8.4**.
 votaciones_festival/
 ├── festival/      # configuración del proyecto (settings, urls)
 ├── votaciones/    # modelos, vistas, servicios (reglas), plantillas, admin, pruebas y API
+├── gestion/       # panel de gestión del personal del festival
 ├── usuarios/      # registro, login y logout
 └── templates/     # plantilla base.html
 ```
@@ -85,6 +89,7 @@ votaciones_festival/
    ```
    python manage.py createsuperuser
    ```
+   Este usuario entra al panel de gestión (`/gestion/`) y desde la opción **Usuarios** puede darle el permiso de personal del festival a otros usuarios registrados.
 9. Iniciar el servidor:
    ```
    python manage.py runserver
@@ -97,8 +102,10 @@ votaciones_festival/
 ## Pruebas automáticas
 
 ```
-python manage.py test votaciones -v 2
+python manage.py test -v 2
 ```
+
+Ejecuta las pruebas de `votaciones` (CP-01 a CP-10) y las del panel de `gestion`.
 
 | Caso | Prueba en `votaciones/tests.py` |
 |------|---------------------------------|
@@ -129,7 +136,12 @@ python manage.py test votaciones -v 2
 | `/usuarios/registro/` | GET/POST | Registro |
 | `/usuarios/login/` | GET/POST | Iniciar sesión |
 | `/usuarios/logout/` | POST | Cerrar sesión |
-| `/admin/` | GET | Django Admin (incluye la consulta de votos) |
+| `/gestion/` | GET | Panel de gestión (solo personal del festival) |
+| `/gestion/ediciones/`, `/gestion/categorias/`, `/gestion/votaciones/`, `/gestion/opciones/` | GET/POST | Listas y formularios para agregar (`nueva/`), modificar (`<id>/editar/`) y eliminar (`<id>/eliminar/`) |
+| `/gestion/votos/` | GET | Consulta de votos con filtros |
+| `/gestion/resultados/` | GET | Total de votos por opción |
+| `/gestion/informe/` | GET/POST | Formulario para descargar el informe CSV |
+| `/admin/` | GET | Django Admin (solo para el desarrollador) |
 
 ### Ejemplo de respuesta de la API
 

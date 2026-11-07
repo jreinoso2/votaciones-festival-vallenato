@@ -1,0 +1,25 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Ediciones</h2>
+  <a class="btn btn-verde mb-2" href="{% url 'gestion_edicion_crear' %}">Agregar edición</a>
+
+  <table class="table table-striped bg-white">
+    <tr><th>Año</th><th>Nombre</th><th>Inicio</th><th>Fin</th><th>Categorías</th><th></th></tr>
+    {% for edicion in ediciones %}
+      <tr>
+        <td>{{ edicion.anio }}</td>
+        <td>{{ edicion.nombre }}</td>
+        <td>{{ edicion.fecha_inicio|date:"d/m/Y" }}</td>
+        <td>{{ edicion.fecha_fin|date:"d/m/Y" }}</td>
+        <td>{{ edicion.num_categorias }}</td>
+        <td>
+          <a href="{% url 'gestion_edicion_editar' edicion.id %}">Modificar</a> |
+          <a href="{% url 'gestion_edicion_eliminar' edicion.id %}" class="text-danger">Eliminar</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">No hay ediciones.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

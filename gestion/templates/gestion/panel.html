@@ -1,0 +1,30 @@
+{% extends 'gestion/base_gestion.html' %}
+
+{% block panel %}
+  <h2>Panel de gestión</h2>
+  <p>Bienvenido {{ user.username }}. Desde aquí se administra el festival sin entrar al admin de Django.</p>
+
+  <table class="table bg-white" style="max-width: 400px">
+    <tr><td>Ediciones</td><td><b>{{ total_ediciones }}</b></td></tr>
+    <tr><td>Categorías</td><td><b>{{ total_categorias }}</b></td></tr>
+    <tr><td>Votaciones</td><td><b>{{ total_votaciones }}</b></td></tr>
+    <tr><td>Opciones</td><td><b>{{ total_opciones }}</b></td></tr>
+    <tr><td>Votos registrados</td><td><b>{{ total_votos }}</b></td></tr>
+    <tr><td>Usuarios</td><td><b>{{ total_usuarios }}</b></td></tr>
+  </table>
+
+  <h4>Últimos votos</h4>
+  <table class="table table-striped bg-white">
+    <tr><th>Fecha</th><th>Usuario</th><th>Categoría</th><th>Opción</th></tr>
+    {% for voto in ultimos_votos %}
+      <tr>
+        <td>{{ voto.fecha|date:"d/m/Y H:i" }}</td>
+        <td>{{ voto.usuario.username }}</td>
+        <td>{{ voto.categoria.nombre }} ({{ voto.edicion.anio }})</td>
+        <td>{{ voto.opcion.nombre }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">Todavía no hay votos.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}
