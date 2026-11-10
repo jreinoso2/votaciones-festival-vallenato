@@ -75,7 +75,7 @@ votaciones_festival/
    CREATE DATABASE votaciones_festival CHARACTER SET utf8mb4;
    ```
    Para ejecutar las pruebas, el usuario de MySQL debe tener permiso para crear la base temporal `test_votaciones_festival`.
-5. Copiar `.env.example` como `.env` y escribir el usuario y la contraseña de MySQL de su equipo. El `.env` real **no** se sube al repositorio.
+5. Copiar `.env.example` como `.env` y escribir el usuario y la contraseña de MySQL de su computador. El `.env` real **no** se sube al repositorio.
 6. Aplicar las migraciones:
    ```
    python manage.py migrate
@@ -167,6 +167,6 @@ Ejecuta las pruebas de `votaciones` (CP-01 a CP-10) y las del panel de `gestion`
 }
 ```
 
-## Equipo
+## Autor
 
-PENDIENTE: nombres completos de los cuatro integrantes.
+Jeferson Reinoso (trabajo individual).
